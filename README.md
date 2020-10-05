@@ -1,7 +1,7 @@
 # BaTSHit
 Betaflight Thrust Stand Helper
 
-![](https://github.com/evilC/BaTSHit/blob/master/BaTSHit.png?raw=true)
+![](https://github.com/evilC/BaTSHit/blob/master/Screenshot.png?raw=true)
 
 BaTSHit is a tool to help you easily operate a "Thrust Stand" (Test RC aircraft motors and propellers) using Betaflight
 It maps hotkeys which can operate the sliders on the "Motors" tab of Betaflight, regardless of which window is currently active
