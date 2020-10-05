@@ -29,6 +29,7 @@ This will stop windows from seeing the hotkey (ie Block the default action of th
 1. Your key choices will be remembered when you next run BaTSHit
 
 ### To Use:
+1. Ensure a motor is connected to the Motor #1 pad of your Flight Controller / ESC
 1. If a copy of Betaflight is running that was not launched by BaTSHit, close it
 **Note** BaTSHit only works with copies of Betaflight that it launched!
 1. Run Batshit.ahk
