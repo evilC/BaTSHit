@@ -9,7 +9,7 @@ SliderSelector := "$('#content > div > div > div.gui_box.motorblock > div > div.
 ;~ SliderSelector := "$('div.sliders input:not(.master)').eq(0)"
 
 if (!FileExist(nwjsPath)){
-	msgbox NWJS SDK not found, please download it and extract it to Lib\NWJS`n(Download page will launch)
+	msgbox NWJS SDK not found, please download it and extract it to Lib\nwjs-sdk`n(Download page will launch)
 	Run, https://nwjs.io/downloads/
 	ExitApp
 }
