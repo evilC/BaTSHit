@@ -19,6 +19,7 @@ This allows you, for example, to have an Excel spreadsheet open and active (So t
 1. Run Batshit.ahk
 1. You will be prompted to download the NWJS SDK - a browser will automatically be opened for you to the download page for this
 1. Extract the SDK to `Lib\nwjs-sdk`
+1. If needed, use the `Choose...` button next to the `Betaflight Path` setting. If Betaflight is in the default install folder, you should not need to do this
 
 ### Setup
 1. Run Batshit.ahk
