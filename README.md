@@ -1,13 +1,14 @@
 # BaTSHit
 Betaflight Thrust Stand Helper
 
+![](https://github.com/evilC/BaTSHit/blob/master/BaTSHit.png?raw=true)
+
 BaTSHit is a tool to help you easily operate a "Thrust Stand" (Test RC aircraft motors and propellers) using Betaflight
 It maps hotkeys which can operate the sliders on the "Motors" tab of Betaflight, regardless of which window is currently active
+![](https://github.com/evilC/BaTSHit/blob/master/Betaflight.png?raw=true)
 This allows you, for example, to have an Excel spreadsheet open and active (So that you can enter thrust values into the spreadsheet), whilst still being able to throttle up or down with hotkeys
 
 **Note:** BaTSHit only works on Microsoft Windows! It will not work on Mac, Linux etc
-
-![](https://github.com/evilC/BaTSHit/blob/master/BaTSHit.png?raw=true)
 
 #### Warning! Spinning propellers are dangerous! Please take appropriate caution when using this app!
 
