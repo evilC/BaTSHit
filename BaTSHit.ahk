@@ -2,7 +2,7 @@
 #include Lib\Chrome\nwjs.ahk
 #include Lib\AppFactory\AppFactory.ahk
 
-nwjsPath := "nwjs-sdk\nw.exe"
+nwjsPath := "Lib\nwjs-sdk\nw.exe"
 bfDefaultPath := "C:\Program Files (x86)\Betaflight\Betaflight-Configurator"
 ;~ bfDefaultPath := "C:\"
 SliderSelector := "$('#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(1)').eq(0)"
