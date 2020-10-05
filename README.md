@@ -5,12 +5,16 @@ BaTSHit is a tool to help you easily operate a "Thrust Stand" (Test RC aircraft 
 It maps hotkeys which can operate the sliders on the "Motors" tab of Betaflight, regardless of which window is currently active
 This allows you, for example, to have an Excel spreadsheet open and active (So that you can enter thrust values into the spreadsheet), whilst still being able to throttle up or down with hotkeys
 
+**Note:** BaTSHit only works on Microsoft Windows! It will not work on Mac, Linux etc
+
+![](https://github.com/evilC/BaTSHit/blob/master/BaTSHit.png?raw=true)
+
 #### Warning! Spinning propellers are dangerous! Please take appropriate caution when using this app!
 
 ## Usage
 ### Installation
 1. Install [AutoHotkey](https://www.autohotkey.com/) if not already installed
-1. Download a release of BaTSHit from the Releases Page
+1. Download a release of BaTSHit from the [Releases Page](https://github.com/evilC/BaTSHit/releases)
 1. Run Batshit.ahk
 1. You will be prompted to download the NWJS SDK - a browser will automatically be opened for you to the download page for this
 1. Extract the SDK to `Lib\nwjs-sdk`
