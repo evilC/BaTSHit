@@ -536,7 +536,7 @@ class Chrome
 					; SOMETIMES return strings due to certain optimizations. Since it
 					; is just 'SOMETIMES', numerify to be consistent w/ v2.0-a
 					else if (val == "true" || val == "false")
-						val := %value% + 0
+						val := %val% + 0 ; GeekDude Fix
 					; AHK_H has built-in null, can't do 'val := %value%' where value == "null"
 					; as it would raise an exception in AHK_H(overriding built-in var)
 					else if (val == "null")
