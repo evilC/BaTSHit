@@ -4,8 +4,12 @@ Interfaces with Betaflight configurator using NWJS
 #include %A_LineFile%\..\nwjs.ahk
 
 class Betaflight {
+	Selectors := {Slider: "$('#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(1)').eq(0)"
+				, CurrentTab: "#content > div > div > div.tab_title.i18n-replaced"
+				, Tabs: {Motors: "#tabs > ul:nth-child(2) > li.tab_motors > a"}}
 	BfDefaultPath := "C:\Program Files (x86)\Betaflight\Betaflight-Configurator"
-	SliderSelector := "$('#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(1)').eq(0)"
+	;~ SliderSelector := "$('#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(1)').eq(0)"
+	;~ CurrentTabSelector := "#content > div > div > div.tab_title.i18n-replaced"
 	;~ SliderSelector := "$('div.sliders input:not(.master)').eq(0)"
 	MotorValue := 0
 
@@ -58,6 +62,32 @@ class Betaflight {
 		return this.BfPath
 	}
 	
+	ExecJS(js){
+		return this.BfPage.evaluate(js)
+	}
+	
+	GetCurrentTab(){
+		return this.GetInnerText(this.Selectors.CurrentTab)
+	}
+
+	ChangeTab(tabName){
+		if (selector := this.Selectors.Tabs[tabName]){
+			this.Click(selector)
+			return true
+		} else {
+			msgbox % "No selector found for tab " tabName
+			return false
+		}
+	}
+	
+	Click(selector){
+		this.ExecJs("document.querySelector('" selector "').click()")
+	}
+	
+	GetInnerText(selector){
+		return this.ExecJS("document.querySelector('" selector "').innerText").value
+	}
+	
 	; ======================== Motors Tab ====================
 	
 	MotorChange(value){
@@ -80,7 +110,7 @@ class Betaflight {
 	
 	SetMotorValue(percent){
 		pos := 1000 + (percent * 10)
-		this.BfPage.evaluate(this.SliderSelector ".val(" pos ").trigger('input');")
+		this.BfPage.evaluate(this.Selectors.Slider ".val(" pos ").trigger('input');")
 	}
 
 	GetMotorValue(){

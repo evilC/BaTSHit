@@ -31,6 +31,12 @@ bf.SetBfPath(factory.GuiControls.BfPath.Get())
 gosub, SetBfLaunchState
 return
 
+F1::
+	msgbox % bf.GetCurrentTab()
+	;~ bf.ChangeTab("Motors")
+	;~ msgbox % bf.GetMotorValue()
+	return
+	
 MotorChange(value, state){
 	global bf
 	if (!state)
