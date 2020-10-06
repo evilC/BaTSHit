@@ -3,6 +3,8 @@
 #include Lib\AppFactory\AppFactory.ahk
 #include Lib\Betaflight\Betaflight.ahk
 
+OutputDebug DBGVIEWCLEAR
+
 nwjsPath := "Lib\nwjs-sdk\nw.exe"
 
 GuiWidth := 555
@@ -29,14 +31,21 @@ Gui, Show, , BaTSHit (Betaflight Thrust Stand Helper)
 bf.SetBfPath(factory.GuiControls.BfPath.Get())
 
 gosub, SetBfLaunchState
+
+mt := 0
 return
 
 F1::
 	;~ msgbox % bf.GetCurrentTab()
-	bf.ChangeTab("Setup")
+	;~ bf.ChangeTab("Setup")
 	;~ msgbox % bf.GetMotorValue()
+	mt := !mt
+	val := bf.MonitorCurrentAmps(mt)
+	if (!mt){
+		msgbox % val
+	}
 	return
-	
+
 MotorChange(value, state){
 	global bf
 	if (!state)
