@@ -32,8 +32,8 @@ gosub, SetBfLaunchState
 return
 
 F1::
-	msgbox % bf.GetCurrentTab()
-	;~ bf.ChangeTab("Motors")
+	;~ msgbox % bf.GetCurrentTab()
+	bf.ChangeTab("Setup")
 	;~ msgbox % bf.GetMotorValue()
 	return
 	
