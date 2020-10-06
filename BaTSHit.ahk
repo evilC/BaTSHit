@@ -4,14 +4,14 @@
 #include Lib\Betaflight\Betaflight.ahk
 
 nwjsPath := "Lib\nwjs-sdk\nw.exe"
-bfDefaultPath := "C:\Program Files (x86)\Betaflight\Betaflight-Configurator"
-;~ bfDefaultPath := "C:\"
 
 GuiWidth := 555
 
+bf := new Betaflight(nwjsPath)
+
 factory := new AppFactory()
 Gui, Add, Text, xm, Betaflight Path
-factory.AddControl("BfPath", "Edit", "x100 yp-2 w400 R1 Disabled", bfDefaultPath, Func("GuiEvent").Bind("BfPath"))
+factory.AddControl("BfPath", "Edit", "x100 yp-2 w400 R1 Disabled", bf.BfDefaultPath, Func("GuiEvent").Bind("BfPath"))
 Gui, Add, Button, x+5 yp w60 gSetBfFolder, Choose...
 
 Gui, Add, Button, xm w%GuiWidth% gLaunchBf vbtnLaunchBf, Launch Betaflight
@@ -25,7 +25,9 @@ Gui, Add, Text, xm w150 y+10, % "Hotkey to Set Motor to 0%"
 factory.AddInputButton("MotorCut", "x150 yp-3 w200", Func("MotorChange").Bind(0))
 Gui, Show, , BaTSHit (Betaflight Thrust Stand Helper)
 
-bf := new Betaflight(nwjsPath, factory.GuiControls.BfPath.Get())
+; Set BF path to setting from INI file
+bf.SetBfPath(factory.GuiControls.BfPath.Get())
+
 gosub, SetBfLaunchState
 return
 

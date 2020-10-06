@@ -4,11 +4,15 @@ Interfaces with Betaflight configurator using NWJS
 #include %A_LineFile%\..\nwjs.ahk
 
 class Betaflight {
+	BfDefaultPath := "C:\Program Files (x86)\Betaflight\Betaflight-Configurator"
 	SliderSelector := "$('#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(1)').eq(0)"
 	;~ SliderSelector := "$('div.sliders input:not(.master)').eq(0)"
 	MotorValue := 0
 
-	__New(NwjsPath, BfPath){
+	__New(NwjsPath, bfPath := -1){
+		if (bfPath == -1){
+			bfPath := this.bfDefaultPath
+		}
 		if (!FileExist(nwjsPath)){
 			msgbox NWJS SDK not found, please download it and extract it to Lib\nwjs-sdk`n(Download page will launch)
 			Run, https://nwjs.io/downloads/
