@@ -4,43 +4,40 @@ Interfaces with Betaflight configurator using NWJS
 #include %A_LineFile%\..\nwjs.ahk
 
 class Betaflight {
-	CurrentTab := "Setup"
-	;~ Selectors := {CurrentTab: "#content > div > div > div.tab_title.i18n-replaced"   
-	Selectors := {CurrentTab: "#content > div > div > div.cf_column.full > div.tab_title.i18n-replaced"
-		, Tabs: {Setup: "#tabs > ul:nth-child(2) > li.tab_setup > a"
-			, "Setup OSD": "#tabs > ul:nth-child(2) > li.tab_setup_osd > a"
-			, Ports: "#tabs > ul:nth-child(2) > li.tab_ports.active > a"
-			, Configuration: "#tabs > ul:nth-child(2) > li.tab_configuration > a"
-			, "Power & Battery": "#tabs > ul:nth-child(2) > li.tab_power > a"
-			, Failsafe: "#tabs > ul:nth-child(2) > li.tab_failsafe > a"
-			, "PID Tuning": "#tabs > ul:nth-child(2) > li.tab_pid_tuning > a"
-			, Receiver: "#tabs > ul:nth-child(2) > li.tab_receiver > a"
-			, Modes: "#tabs > ul:nth-child(2) > li.tab_auxiliary > a"
-			, Adjustments: "#tabs > ul:nth-child(2) > li.tab_adjustments > a"
-			, Servos: "#tabs > ul:nth-child(2) > li.tab_servos > a"
-			, Motors: "#tabs > ul:nth-child(2) > li.tab_motors > a"
-			, OSD: "#tabs > ul:nth-child(2) > li.tab_osd > a"
-			, VTX: "#tabs > ul:nth-child(2) > li.tab_vtx > a"
-			, Transponder: "#tabs > ul:nth-child(2) > li.tab_transponder > a"
-			, "LED Strip": "#tabs > ul:nth-child(2) > li.tab_led_strip > a"
-			, Sensors: "#tabs > ul:nth-child(2) > li.tab_sensors.active > a"
-			, "Tethered Logging": "#tabs > ul:nth-child(2) > li.tab_logging > a"
-			, BlackBox: "#tabs > ul:nth-child(2) > li.tab_onboard_logging > a"
-			, CLI: "#tabs > ul.mode-connected.mode-connected-cli > li > a"}
-		, Power: {BatteryConnected: "#battery-connection-state > td.value"
-			, CurrentVolts: "#battery-voltage > td.value"
-			, CurrentAmps: "#battery-amperage > td.value"
-			, mAhUsed: "#battery-mah-drawn > td.value"}
-		, Motors: {EnableMotors: "#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.notice > span.switchery.switchery-small"
-			, Sliders: ["$('#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(1)').eq(0)"
-			, "$('#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(1)').eq(1)"
-			, "$('#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(1)').eq(2)"
-			, "$('#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(1)').eq(3)"
-			, "$('#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(1)').eq(4)"
-			, "$('#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(1)').eq(5)"
-			, "$('#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(1)').eq(6)"
-			, "$('#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(1)').eq(7)"
-			, "$('#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(1)').eq(8)"]}}
+	DefaultTimeout := 5000
+	;~ Selectors := {CurrentTab: "#content > div > div > div.tab_title.i18n-replaced"
+	Tabs:= {setup: {Name: "Setup", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_setup > a"}
+		, ports: {Name: "Ports", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_ports > a"}
+		, configuration: {Name: "Configuration", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_configuration > a"}
+		, power: {Name: "Power & Battery", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_power > a"}
+		, failsafe: {Name: "Failsafe", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_failsafe > a"}
+		, pid_Tuning: {Name: "PID Tuning", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_pid_tuning > a"}
+		, receiver: {Name: "Receiver", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_receiver > a"}
+		, auxiliary: {Name: "Modes", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_auxiliary > a"}
+		, adjustments: {Name: "Adjustments", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_adjustments > a"}
+		, servos: {Name: "Servos", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_servos > a"}
+		, motors: {Name: "Motors", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_motors > a"}
+		, osd: {Name: "OSD", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_osd > a"}
+		, vtx: {Name: "Video Transmitter", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_vtx > a"}
+		, "led-strip": {Name: "LED Strip", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_led_strip > a"}
+		, sensors: {Name: "Sensors", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_sensors > a"}
+		, logging: {Name: "Tethered Logging", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_logging > a"}
+		, onboard_logging: {Name: "Blackbox", MenuSelector: "#tabs > ul:nth-child(2) > li.tab_onboard_logging > a"}
+		, cli: {Name: "CLI", MenuSelector: "#tabs > ul.mode-connected.mode-connected-cli > li > a"}}
+	Power := {BatteryConnected: "#battery-connection-state > td.value"
+		, CurrentVolts: "#battery-voltage > td.value"
+		, CurrentAmps: "#battery-amperage > td.value"
+		, mAhUsed: "#battery-mah-drawn > td.value"}
+	Motors := {SetEnableMotors: "#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.notice > span.switchery.switchery-small"
+		, GetEnableMotors: "#motorsEnableTestMode"
+		, Sliders: ["#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(1)"
+		, "#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(2)"
+		, "#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(3)"
+		, "#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(4)"
+		, "#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(5)"
+		, "#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(6)"
+		, "#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(7)"
+		, "#content > div > div > div.gui_box.motorblock > div > div.motor_testing > div.left > div.sliders > input[type=range]:nth-child(8)"]}
 			
 	BfDefaultPath := "C:\Program Files (x86)\Betaflight\Betaflight-Configurator"
 	MotorValue := 0
@@ -99,56 +96,153 @@ class Betaflight {
 		return this.BfPath
 	}
 	
+	; ============== DOM management
+	
+	ExecJS(js){
+		this.Debug("Executing JS: " js)
+		return this.BfPage.evaluate(js)
+	}
+	
+	GetTimeout(timeout := -1){
+		if (timeout == -1)
+			return this.DefaultTimeout
+		else
+			return timeout
+	}
+	
+	WaitForSelector(selector, timeout := -1){
+		this.Debug("Waiting for selector " selector)
+		timeout := this.GetTimeout(timeout)
+		gotSelector := 0
+		Loop {
+			try {
+				node := this.ExecJS("document.querySelector('" selector "')")
+				gotSelector := 1
+				if (node.subtype == "null")
+					throw
+				this.Debug("Wait for selector ended - FOUND, subtype = " node.subtype)
+				break
+			} catch {
+				;~ msg := "Wait for selector ended - Exception! Selector = " selector
+				;~ this.Debug(msg)
+				;~ throw msg
+			}
+			Sleep 10
+		} until (gotSelector || A_TickCount > timeout)
+		if (!gotSelector){
+			msg =  "Wait for selector ended - NOT FOUND, Timeout reached ! Selector = " selector
+			this.Debug(msg)
+			throw msg
+		}
+		return this
+	}
+	
+	BuildJQuery(selector, action){
+		js := "$('" selector "')"
+		if (action != "")
+			js .= "." action
+		return js
+	}
+	
+	/*
+	BuildJS(selector, action := ""){
+		js := "document.querySelector('" selector "')"
+		if (action != "")
+			js .= "." action
+		return js
+	}
+	*/
+	
+	GetSelector(selector, timeout := -1){
+		this.WaitForSelector(selector, timeout)
+		;~ return this.ExecJS(this.BuildJS(selector))
+		return this.ExecJS(this.BuildJQuery(selector))
+	}
+	
+	Click(selector, timeout := -1){
+		this.Debug("Clicking selector " selector " ...")
+		this.WaitForSelector(selector, timeout)
+		this.ExecJs(this.BuildJQuery(selector, "click()"))
+	}
+	
+	; Get InnerText of an element
+	GetInnerText(selector, timeout := -1){
+		this.Debug("Getting InnerText for selector " selector " ...")
+		this.WaitForSelector(selector, timeout)
+		;~ node := this.ExecJS(this.BuildJS(selector, "innerText"))
+		node := this.ExecJS(this.BuildJQuery(selector, "text()"))
+		this.Debug("Value is " node.value)
+		return node.value
+	}
+	
+	; Gets value of a TextBox etc
+	GetValue(selector, timeout := -1){
+		this.Debug("Getting Value for selector " selector " ...")
+		this.WaitForSelector(selector, timeout)
+		js := this.BuildJQuery(selector, "val()")
+		node := this.ExecJS(js)
+		value := node.value
+		this.Debug("Value is " value)
+		return value
+	}
+	
+	; Gets value of a Checkbox
+	GetCheckboxState(selector){
+		this.Debug("Getting Checkbox state for selector " selector "...")
+		node := this.ExecJs(this.BuildJQuery(selector, "is(':checked')"))
+		value := node.value
+		this.Debug("Value is " value)
+		return value
+	}
+	
+	; ============= Tabs
 	GetCurrentTab(){
-		; Unreliable - path not always the same
-		; return this.GetInnerText(this.Selectors.CurrentTab)
-		return this.CurrentTab
+		timeout := A_TickCount + 5000
+		selector := "#content > div"
+		found := 0
+		Loop {
+			gotSelector := 0
+			; ToDo: Can I use GetSelector() here?
+			this.WaitForSelector(selector)
+			node := this.ExecJS(this.BuildJQuery(selector, "attr('class')"))
+			desc := node.value
+			if (desc == ""){
+				this.Debug("Node has no description")
+			} else {
+				this.Debug("Description is " desc)
+			}
+			;~ pos := RegExMatch(desc, "O)div\.tab-([\w-]*)", m)
+			pos := RegExMatch(desc, "O)tab-([\w-]*)", m)
+			tabName := m.Value(1)
+			if (tabName != ""){
+				found := 1
+			} else {
+				this.Debug("Waiting for tab name...")
+			}
+		} until (found || A_TickCount > timeout)
+		if (!found){
+			msg := "Could not get current tab"
+			this.Debug(msg)
+			throw msg
+		}
+		this.debug(tabName)
+		return tabName
 	}
 	
 	; Returns true if tab changed
 	ChangeTab(tabName){
-		if (this.CurrentTab == tabName)
-			return false
-		if (selector := this.Selectors.Tabs[tabName]){
-			this.Debug("Clicking selector for tab " tabName)
-			this.Click(selector)
-			this.CurrentTab := tabName
-			;~ this.WaitForPageLoad()
-			Sleep, 200 ; ToDo: Need deterministic way to ensure page is ready
-			return true
+		this.Debug("Change Tab start - " tabName)
+		currentTab := this.GetCurrentTab()
+		if (currentTab == tabName){
+			this.Debug("Change Tab end - already on tab " tabName)
 		} else {
-			msgbox % "No selector found for tab " tabName
-			return false
+			if (!ObjHasKey(this.Tabs, tabName)){
+				throw "Unknown tab " tabName
+			}
+			selector := this.Tabs[tabName].MenuSelector
+			this.Click(selector)
+			this.Debug("Change Tab end")
 		}
-	}
-	
-	Click(selector){
-		this.ExecJs("document.querySelector('" selector "').click()")
-	}
-	
-	GetInnerText(selector){
-		this.Debug("Getting InnerText for selector " selector " ...")
-		value := this.ExecJS("document.querySelector('" selector "').innerText").value
-		this.Debug("Value is " value)
-		return value
-	}
-	
-	GetValue(selector){
-		this.Debug("Getting Value for selector " selector "...")
-		value := this.ExecJS(selector ".val()").value
-		this.Debug("Value is " value)
-		return value
-	}
-	
-	ExecJS(js){
-		return this.BfPage.evaluate(js)
-	}
-	
-	GetCheckboxState(selector){
-		this.Debug("Getting Checkbox state for selector " selector "...")
-		value := this.ExecJs("document.querySelector('" selector "').checked").value
-		this.Debug("Value is " value)
-		return value
 	}
 	
 	Debug(text){
@@ -157,28 +251,28 @@ class Betaflight {
 	; ======================== Power Tab ====================
 	
 	GetCurrentVolts(){
-		this.ChangeTab("Power & Battery")
-		val := this.GetInnerText(this.Selectors.Power.CurrentVolts)
+		val := this.GetInnerText(this.Power.CurrentVolts)
 		val := SubStr(val, 1 , StrLen(val) - 2)
 		return val
 	}
 	
 	GetCurrentAmps(){
-		this.ChangeTab("Power & Battery")
-		val := this.GetInnerText(this.Selectors.Power.CurrentAmps)
+		val := this.GetInnerText(this.Power.CurrentAmps)
 		val := SubStr(val, 1 , StrLen(val) - 2)
 		return val
 	}
 	
 	MonitorCurrentAmps(state){
-		;~ this.ChangeTab("Power & Battery")
 		fn := this._MonitorCurrentAmpsFn
 		if (state){
 			this.MaxAmps := 0
+			this.ChangeTab("motors")
 			this.MotorChange(50)
+			this.ChangeTab("power")
 			SetTimer, % fn, 1000
 		} else {
 			SetTimer, % fn, Off
+			this.ChangeTab("motors")
 			this.MotorChange(0)
 			return this.MaxAmps
 		}
@@ -193,13 +287,13 @@ class Betaflight {
 	
 	; ======================== Motors Tab ====================
 
-	GetMotorState(){
-		return this.GetCheckboxState("#motorsEnableTestMode")
+	GetMotorsEnabled(){
+		return this.GetCheckboxState(this.Motors.GetEnableMotors)
 	}
 	
-	SetMotorState(state){
-		if (state != this.GetMotorState()){
-			this.Click(this.Selectors.Motors.EnableMotors)
+	SetMotorsEnabled(state){
+		if (state != this.GetMotorsEnabled()){
+			this.Click(this.Motors.SetEnableMotors)
 		}
 	}
 	
@@ -222,15 +316,17 @@ class Betaflight {
 	}
 	
 	SetMotorValue(percent, motor := 1){
-		this.ChangeTab("Motors")
-		this.SetMotorState(1)
+		
+		this.SetMotorsEnabled(1)
 		pos := 1000 + (percent * 10)
-		this.ExecJS(this.Selectors.Motors.Sliders[motor]  ".val(" pos ").trigger('input');")
+		this.ExecJS(this.BuildJQuery(this.Motors.Sliders[motor], "val(" pos ").trigger('input');"))
 	}
 
 	GetMotorValue(motor := 1){
-		this.ChangeTab("Motors")
-		this.EnableMotorsIfChangingTab()
-		return this.ExecJS(this.Selectors.Motors.Sliders[motor] ".val()").value.value
+		; ToDo: Why is this sometimes off by 1?
+		this.SetMotorsEnabled(1)
+		pos := this.GetValue(this.Motors.Sliders[motor])
+		value := round((pos - 1000) / 10)
+		return value
 	}
 }

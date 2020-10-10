@@ -36,16 +36,58 @@ mt := 0
 return
 
 F1::
-	;~ msgbox % bf.GetCurrentTab()
-	;~ bf.ChangeTab("Setup")
-	;~ msgbox % bf.GetMotorValue()
-	mt := !mt
-	val := bf.MonitorCurrentAmps(mt)
-	if (!mt){
-		msgbox % val
+	; Change tabs test
+	for tabName, tabObj in bf.Tabs {
+		keywait, Esc
+		if (tabName == "cli")
+			continue
+		Tooltip % tabName
+		bf.ChangeTab(tabName)
+		KeyWait, Esc, D
 	}
+	;~ Tooltip % bf.GetInnerText(bf.Power.CurrentVolts)
+	; Get value test - try to get Roll Degrees box on Configuration tab
+	;~ Tooltip % bf.GetValue("#content > div > div > table > tbody > tr:nth-child(1) > td:nth-child(2) > div.board.acc > div:nth-child(1) > div.spacer_box > div.board_align_content > div:nth-child(1) > label > input[type=number]")
+	;~ msgbox % bf.GetMotorValue()
 	return
 
+F2::
+	; InnerText test - try to get voltage on Power tab
+	Tooltip % bf.GetInnerText("#battery-voltage > td.value")
+	return
+
+F3::
+	; Monitor power test
+	mt := !mt
+	max := bf.MonitorCurrentAmps(mt)
+	if (!mt)
+		msgbox % max
+	return
+
+F4::
+	; Slider Set test
+	
+	return
+
+F6::
+	; Current Tab test
+	return
+
+F7::
+	; Enable Motors test
+	Tooltip % bf.SetMotorsEnabled(1)
+	return
+
+F8::
+	; Get Motor value test
+	Tooltip % bf.GetMotorValue()
+	return
+
+F9::
+	; Set Motor value test
+	bf.SetMotorValue(50)
+	return
+	
 MotorChange(value, state){
 	global bf
 	if (!state)
