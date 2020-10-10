@@ -45,18 +45,9 @@ F1::
 		bf.ChangeTab(tabName)
 		KeyWait, Esc, D
 	}
-	;~ Tooltip % bf.GetInnerText(bf.Power.CurrentVolts)
-	; Get value test - try to get Roll Degrees box on Configuration tab
-	;~ Tooltip % bf.GetValue("#content > div > div > table > tbody > tr:nth-child(1) > td:nth-child(2) > div.board.acc > div:nth-child(1) > div.spacer_box > div.board_align_content > div:nth-child(1) > label > input[type=number]")
-	;~ msgbox % bf.GetMotorValue()
 	return
 
 F2::
-	; InnerText test - try to get voltage on Power tab
-	Tooltip % bf.GetInnerText("#battery-voltage > td.value")
-	return
-
-F3::
 	; Monitor power test
 	mt := !mt
 	max := bf.MonitorCurrentAmps(mt)
@@ -64,13 +55,9 @@ F3::
 		msgbox % max
 	return
 
-F4::
-	; Slider Set test
-	
-	return
-
-F6::
-	; Current Tab test
+F3::
+	; InnerText test - try to get voltage on Power tab
+	Tooltip % bf.GetInnerText("#battery-voltage > td.value")
 	return
 
 F7::
