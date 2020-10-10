@@ -79,6 +79,8 @@ MotorChange(value, state){
 	global bf
 	if (!state)
 		return
+	bf.ChangeTab("motors")
+	bf.SetMotorsEnabled(1)
 	bf.MotorChange(value)
 }
 
